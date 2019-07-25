@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<xsl:stylesheet version="1.0"
+xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+
+
+<xsl:template name="toWhomIsConcerned">
+<table cellspacing="0" cellpadding="5" border="0">
+	<tr>
+		<td>
+			<xsl:for-each select="notification_data">
+				<h3>@@dear@@ &#8203;<xsl:choose>
+                <xsl:when test="receivers/receiver/user/preferred_first_name=''">
+                                <xsl:value-of select="receivers/receiver/user/first_name"/>
+                </xsl:when>
+                <xsl:otherwise>
+                                <xsl:value-of select="receivers/receiver/user/preferred_first_name"/>
+                </xsl:otherwise>
+</xsl:choose>,
+</h3>
+			</xsl:for-each>
+		</td>
+	</tr>
+</table>
+
+
+</xsl:template>
+
+</xsl:stylesheet>
