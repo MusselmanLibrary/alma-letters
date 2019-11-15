@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<xsl:stylesheet version="1.0"
+xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+<xsl:include href="header.xsl" />
+<xsl:include href="senderReceiver.xsl" />
+<xsl:include href="mailReason.xsl" />
+<xsl:include href="footer.xsl" />
+<xsl:include href="style.xsl" />
+
+<xsl:template match="/">
+	<html>
+		<head>
+		<xsl:call-template name="generalStyle" />
+		</head>
+
+			<body>
+			<xsl:attribute name="style">
+				<xsl:call-template name="bodyStyleCss" /> <!-- style.xsl -->
+			</xsl:attribute>
+
+				<xsl:call-template name="head" /> <!-- header.xsl -->
+				<!--<xsl:call-template name="senderReceiver" />--> <!-- SenderReceiver.xsl -->
+
+				<br />
+				<xsl:call-template name="toWhomIsConcerned" /> <!-- mailReason.xsl -->
+					@@You_were_specify@@:
+				<br />
+				<table cellspacing="0" cellpadding="5" border="0">
+				<!--<tr>
+					<td>
+				<br />
+				@@orderNumber@@	:
+						<br />
+					</td>
+						<td>
+				<br />
+				<xsl:value-of  select="notification_data/line_number"/>
+						<br />
+					</td>
+					</tr> -->
+				<tr>
+					<td>
+				<br />
+				@@title@@ :
+
+						<br />
+
+					</td>
+						<td>
+				<br />
+				<xsl:value-of  select="notification_data/title"/>
+
+						<br />
+
+					</td>
+					</tr>
+				<!--<tr>
+					<td>
+				<br />
+				@@mmsId@@ :
+						<br />
+					</td>
+						<td>
+				<br />
+				<xsl:value-of  select="notification_data/mms_id"/>
+						<br />
+					</td>
+					</tr> -->
+					<tr>
+					<td>
+				<br /> 
+				@@callNumber@@:
+
+						<br />
+
+					</td>
+						<td>
+				<br />
+				<xsl:value-of  select="notification_data/poline_inventory/call_number"/>
+
+						<br />
+
+					</td>
+					</tr>
+				<!--<tr>
+					<td>
+				<br />
+				@@receivingNote@@ : 
+						<br />
+					</td>
+						<td>
+				<br />
+				<xsl:value-of  select="notification_data/receiving_note"/>
+						<br />
+					</td>
+				</tr> -->
+					<tr>
+					<td>
+				<br /> 
+				@@message@@:
+
+						<br />
+
+					</td>
+						<td>
+				<br />
+				<xsl:choose>
+				   <xsl:when test="notification_data/message = 'E-resource was activated.'">
+					  This resource is now available to access through the library's catalog, MUSCAT Plus.
+				   </xsl:when>
+					<xsl:when test="notification_data/message = 'Item was received.'">
+							This item has been received by the library and is currently in processing. To check it out as soon as it's available, please click the link below and place a request for this item.
+					   </xsl:when>
+					   <xsl:otherwise>
+						   <xsl:value-of select="notification_data/message"/>
+					   </xsl:otherwise>
+					</xsl:choose>						
+					<br />
+					</td>
+					</tr>
+					<tr>
+					<td>
+				<br />
+				Link :
+						<br />
+					</td>
+						<td>
+				<br />
+				https://gettysburg.primo.exlibrisgroup.com/permalink/01GETTYSBURG_INST/1m1ecj3/alma<xsl:value-of select="notification_data/mms_id"/>
+				
+						<br />
+					</td>
+					</tr>
+				</table>
+				<br />
+				<table>
+						<tr><td>@@sincerely@@</td></tr>
+						<tr><td>@@department@@</td></tr>
+				</table>
+
+				<!--<xsl:call-template name="lastFooter" />--> <!-- footer.xsl -->
+			</body>
+	</html>
+</xsl:template>
+
+</xsl:stylesheet>
