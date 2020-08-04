@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+  <xsl:include href="header.xsl" />
+  <xsl:include href="senderReceiver.xsl" />
+  <xsl:include href="mailReason.xsl" />
+  <xsl:include href="footer.xsl" />
+  <xsl:include href="style.xsl" />
+  <xsl:include href="recordTitle.xsl" />
+
+  <xsl:template match="/">
+    <html>
+      <head>
+        <xsl:call-template name="generalStyle" />
+      </head>
+      <body>
+        <xsl:attribute name="style">
+          <xsl:call-template name="bodyStyleCss" /><!-- style.xsl -->
+        </xsl:attribute>
+
+        <xsl:call-template name="head" /><!-- header.xsl -->
+        <!--<xsl:call-template name="senderReceiver" />--> <!-- SenderReceiver.xsl -->
+
+		<br />
+		<xsl:call-template name="toWhomIsConcerned" /> <!-- mailReason.xsl -->
+		<div class="messageArea">
+        <div class="messageBody">
+
+
+        	<table cellspacing="0" cellpadding="5" border="0">
+				<tr>
+				<td>
+					<p>The items below have been checked out to you.<!--<xsl:value-of select="notification_data/organization_unit/name" />--><!--<xsl:value-of select="notification_data/circ_desk_name"/>--></p>
+				</td>
+				</tr>
+				
+				<tr>
+				<td>
+					<p><b>IF YOU JUST VISITED THE CHECK OUT DESK IN PERSON:</b></p>
+					<p>There is nothing you need to do. This is just a loan receipt.</p>
+				</td>
+				</tr>
+				
+					<p><b>IF YOU REQUESTED ITEMS THROUGH MUSCAT PLUS:</b></p>
+					
+					<ul>
+						<li>Library staff have processed your request</li>
+						<li>The items below are now checked out to you</li>
+						<li>You need your campus ID to enter the library</li>
+						<li>Pick these items up from the metal shelves near the Check Out Desk</li>
+						<li>Items on metal shelves are in alphabetical order by patron last name</li>
+						<li>You don't have to check with library staff before or after taking your items</li>
+					</ul>
+					
+					<p>
+						Please reply to this email with your street address if you need your items mailed to you.
+					</p>
+					
+					<xsl:for-each select="notification_data/loans_by_library/library_loans_for_display">
+					<tr>
+						<td>
+							<table cellpadding="5" class="listing">
+								<xsl:attribute name="style">
+									<xsl:call-template name="mainTableStyleCss" />
+								</xsl:attribute>
+								<tr align="center" bgcolor="#f5f5f5">
+									<td colspan="6">
+										<!--<h3><xsl:value-of select="organization_unit/name" /></h3>-->
+									</td>
+								</tr>
+								<tr>
+									<th>@@title@@</th>
+									<!--<th>@@author@@</th>-->
+									<!--<th>@@loan_date@@</th>-->
+									<th>@@due_date@@</th>
+									<!--<th>@@library@@</th>-->
+									<th>@@description@@</th>
+									<th>Link</th>
+								</tr>
+
+								<xsl:for-each select="item_loans/overdue_and_lost_loan_notification_display/item_loan">
+									<tr>
+										<td><xsl:value-of select="title"/></td>
+										<!--<td><xsl:value-of select="author"/></td>-->
+										<!--<td><xsl:value-of select="loan_date"/></td>-->
+										<td><xsl:value-of select="new_due_date_str"/></td>
+										<!--<td><xsl:value-of select="library_name"/></td>-->
+										<td><xsl:value-of select="description"/></td>
+										<td>https://gettysburg.primo.exlibrisgroup.com/permalink/01GETTYSBURG_INST/1m1ecj3/alma<xsl:value-of select="mms_id"></xsl:value-of></td>
+									</tr>
+								</xsl:for-each>
+							</table>
+						</td>
+					</tr>
+					<hr/><br/>
+				</xsl:for-each>
+				<br />
+				<br />
+			</table>
+
+			<table>
+				<tr><td>@@sincerely@@</td></tr>
+				<tr><td>@@department@@</td></tr>
+			</table>
+
+	  		</div>
+        </div>
+        <!-- footer.xsl -->
+        <xsl:call-template name="lastFooter" />
+        <xsl:call-template name="myAccount" />
+      </body>
+    </html>
+  </xsl:template>
+</xsl:stylesheet>
