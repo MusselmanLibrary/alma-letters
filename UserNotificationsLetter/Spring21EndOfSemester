@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsl:stylesheet version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:include href="header.xsl" />
+	<xsl:include href="senderReceiver.xsl" />
+	<xsl:include href="mailReason.xsl" />
+	<xsl:include href="footer.xsl" />
+	<xsl:include href="style.xsl" />
+	<xsl:include href="recordTitle.xsl" />
+	<xsl:template match="/">
+		<html>
+			<head>
+				<xsl:call-template name="generalStyle" />
+			</head>
+			<body>
+				<xsl:attribute name="style">
+					<xsl:call-template name="bodyStyleCss" />
+					<!-- style.xsl -->
+				</xsl:attribute>
+				<xsl:call-template name="head" />
+				<!-- header.xsl -->
+
+					<br />
+					<xsl:call-template name="toWhomIsConcerned" /> <!-- mailReason.xsl -->
+
+
+				<div class="messageArea">
+					<div class="messageBody">
+
+
+
+						<table cellspacing="0" cellpadding="5" border="0">
+							<xsl:choose>
+								<xsl:when test="notification_data/notification_type = 'Spring21_Student_Returns' ">
+
+									<tr>
+
+										<td>
+											<p>@@Line_1@@</p>
+										</td>
+									</tr>
+
+								</xsl:when>
+
+							</xsl:choose>
+						</table>
+						<br />
+
+
+							
+						<ul>
+							<li><strong>On-Campus Students</strong></li>
+								<ul>
+									<li>Return library materials using the return slot by the Stine Lake entrance or drop them off at the Check Out desk before leaving campus.</li>
+								</ul>
+							<li><strong>Remote Students</strong></li>
+								<ul>
+									<li>Remote students must ship books back to the library.</li>
+									<li>You can request a pre-paid UPS shipping label by replying to this email or writing to <a href="mailto:circ_email@gettysburg.edu">circ_email@gettysburg.edu</a>. </li>
+									<ul>
+										<li>Include in the message your mailing address and total weight of the items</li>
+										<li>If you have multiple items, please wait until you are finished with all of them so they can be returned in a single shipment.</li>
+									</ul>
+									<li>If you received multiple items over the course of the semester, you can combine them in one package for return.  You can use any of the return labels included with those items instead of requesting a new one.  Affix any of the pre-paid labels you received to the package, and discard the rest.</li>
+									<li>Interlibrary loan returns can be included with Musselman Library books.</li>
+									<li>Rented textbooks SHOULD NOT be included with library books or shipped to the library.  Musselman Library books have a call number on the spine.</li>
+									<li>After packaging your items and applying the pre-paid label, take the package to a <a href="https://www.ups.com/dropoff/?loc=en_US">UPS store near you</a>, or <a href="https://wwwapps.ups.com/pickup/schedule?loc=en_US">schedule a pickup</a>. </li>
+								</ul>
+							
+						</ul>
+						
+<p>For any item that is not checked back in at the library by <strong>May 24th</strong>, a replacement charge will be added to your student account.</p>						
+
+
+						<table>
+
+							<tr>
+								<td>@@Line_4@@</td>
+							</tr>
+
+						<br></br>
+
+							<tr>
+								<td>@@Sincerely@@</td>
+							</tr>
+							<tr>
+								<td>
+									<p>@@Line_5@@</p>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<!--<xsl:value-of select="notification_data/organization_unit/name" /> -->
+								</td>
+							</tr>
+							<xsl:if test="notification_data/organization_unit/address/line1 !=''">
+								<tr>
+									<td>
+										<xsl:value-of select="notification_data/organization_unit/address/line1" />
+									</td>
+								</tr>
+							</xsl:if>
+							<xsl:if test="notification_data/organization_unit/address/line2 !=''">
+								<tr>
+									<td>
+										<xsl:value-of select="notification_data/organization_unit/address/line2" />
+									</td>
+								</tr>
+							</xsl:if>
+							<xsl:if test="notification_data/organization_unit/address/line3 !=''">
+								<tr>
+									<td>
+										<xsl:value-of select="notification_data/organization_unit/address/line3" />
+									</td>
+								</tr>
+							</xsl:if>
+							<xsl:if test="notification_data/organization_unit/address/line4 !=''">
+								<tr>
+									<td>
+										<xsl:value-of select="notification_data/organization_unit/address/line4" />
+									</td>
+								</tr>
+							</xsl:if>
+							<xsl:if test="notification_data/organization_unit/address/line5 !=''">
+								<tr>
+									<td>
+										<xsl:value-of select="notification_data/organization_unit/address/line5" />
+									</td>
+								</tr>
+							</xsl:if>
+							<xsl:if test="notification_data/organization_unit/address/city !=''">
+								<tr>
+									<td>
+										<xsl:value-of select="notification_data/organization_unit/address/city" />
+									</td>
+								</tr>
+							</xsl:if>
+							<xsl:if test="notification_data/organization_unit/address/country !=''">
+								<tr>
+									<td>
+										<xsl:value-of select="notification_data/organization_unit/address/country" />
+									</td>
+								</tr>
+
+							</xsl:if>
+
+						</table>
+					</div>
+				</div>
+
+				<!-- footer.xsl -->
+        <xsl:call-template name="lastFooter" />
+        	<xsl:call-template name="myAccount" />
+
+			</body>
+		</html>
+	</xsl:template>
+</xsl:stylesheet>
